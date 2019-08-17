@@ -1,0 +1,1046 @@
+\documentclass[article]{siamltex}
+\usepackage{epsfig}
+\usepackage{subfigure,color,graphicx,cite}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\input psfig.sty
+
+\textheight 220 true mm \textwidth 150 true mm \topmargin -10mm
+\oddsidemargin 0cm \evensidemargin 0cm \leftskip  0mm \rightskip
+0mm \hoffset 5mm
+
+%\newenvironment{proof}{\begin{trivlist}
+%    \item[\hskip\labelsep{\it Proof.}]}{$\hfill\Box$\end{trivlist}}
+
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Corollary}{Corollary}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Remark}{Remark}
+\newtheorem{Definition}{Definition}
+\newtheorem{Example}{Example}
+%\newtheorem{alg}[Example]{Algorithm}{\bf}%{\rm}
+%\newtheorem{program}[Example]{Program}{\bf}{\rm}
+
+\allowdisplaybreaks
+
+%\renewcommand{\qedsymbol}{{ \vrule height7pt width7pt depth0pt}\par\bigskip}
+
+\def\lq{\left(}
+\def\rq{\right)}
+
+\def\cala{{\mathcal A}}
+\def\bx{\boldsymbol x}
+\def\by{\boldsymbol y}
+\def\bz{{\boldsymbol z}}
+\def\be{{\boldsymbol e}}
+%\def\bk{\boldsymbol k}
+\def\bk{{\bf k}}
+\def\bK{\boldsymbol K}
+\def\bm{{\bf m}}
+%\def\bm{\boldsymbol m}
+\def\bw{{\boldsymbol w}}
+\def\bW{{\boldsymbol W}}
+\def\bh{{\boldsymbol h}}
+\def\bg{{\boldsymbol g}}
+\def\bv{{\boldsymbol v}}
+\def\bu{{\boldsymbol u}}
+\def\bDel{{\boldsymbol\Delta}}
+\def\ba{{\boldsymbol a}}
+\def\bA{{\boldsymbol A}}
+\def\bb{{\boldsymbol b}}
+%\def\bi{{\boldsymbol i}}
+%\def\bj{{\boldsymbol j}}
+%\def\bl{{\boldsymbol l}}
+\def\bi{{\bf i}}
+\def\bj{{\bf j}}
+\def\bl{{\bf l}}
+\def\btau{{\boldsymbol \tau}}
+\def\bthe{{\boldsymbol \theta }}
+\def\bmu{{\boldsymbol \mu }}
+\def\bxi{{\boldsymbol \xi }}
+\def\bnu{{\boldsymbol \nu }}
+\def\blam{{\boldsymbol \lambda }}
+\def\bgam{{\boldsymbol \gamma }}
+\def\bsigma{{\boldsymbol \sigma }}
+\def\bzeta{{\boldsymbol \zeta }}
+\def\bomega{{\boldsymbol \omega }}
+\def\balpha{{\boldsymbol \alpha}}
+\def\bbeta{{\boldsymbol \beta}}
+\def\bzero{{\boldsymbol 0}}
+
+\def\bone{{\boldsymbol 1}}
+\def\calV {\mathcal {V}}
+
+\def\calH {\mathcal {H}}
+\def\K {\mathcal {K}}
+\def\calP {\mathcal {P}}
+\def\calF {\mathcal {F}}
+\newcommand{\trig}{{\rm trig}}
+\newcommand{\df}[2]{\displaystyle\frac{#1}{#2}}
+\newcommand{\comb}[2]{{{#1}\choose {#2}}}
+\newcommand{\crno}{\cr\noalign{\vskip2mm}}
+\newcommand{\Enorm}[1]{\left\Vert#1\right\Vert_{E,\omega}}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+
+\newcommand{\Z}{{\mathbb Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\per}{\text{per}}
+\newcommand{\fil}{{fil}}
+\newcommand{\dprod}{\displaystyle\prod}
+\newcommand{\dsum}{\displaystyle\sum}
+\newcommand{\dint}{\displaystyle\int}
+\newcommand{\sign}{\text{sign}}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+%\newcommand{\err}{\text{err}}
+
+\DeclareMathOperator*{\err}{err} \DeclareMathOperator*{\avg}{avg}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\trace}{trace}
+%\DeclareMathOperator*{\diag}{diag}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\minimize}{minimize}
+\DeclareMathOperator*{\subjectto}{subject \,\,to:}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+
+
+
+%%--------------------------------------------------
+
+
+
+
+\title{Chebyshev Spectral Methods on Lattices for High-Dimensional
+Approximation \thanks{This research was supported by NSFC 11701358 .}}
+
+
+\author{
+Xiaoyan Zeng\thanks{Department of  Mathematics,
+ Shanghai University, Shanghai 200444, P.R.China ({\tt
+cherryzxy@shu.edu.cn}).}\and
+Fred J. Hickernell\thanks{Department of Applied Mathematics,
+ Illinois Institute of Technology, Chicago, IL 60616, U.S.A. ({\tt
+hickernell@iit.edu}).}
+}
+
+\date{}
+\maketitle
+
+\begin{abstract}
+The aim of this paper is to develop numerical methods that can
+avoid the curse of the dimensionality of the domain for
+approximation problems. It is assumed that $f$ can be expressed by
+an absolutely convergent multidimensional Chebyshev series
+expansion. The design points set, $P$, considered here, in
+contrast to the classic ones, contains only half of the node sets
+of integration lattices with a cosine transformation. Its
+Chebyshev coefficients are approximated at some selected
+nonnegative wavenumbers by  quadrature rules and all other
+Chebyshev coefficients are set to be zero. The approximation of
+$f$ is then taken to be the Chebyshev expansion based on these
+approximated Chebyshev coefficients. The error of the
+approximation is discussed in the weighted $L_2$ norm.  We prove
+the convergence rate is independent of the dimension of the domain
+and the convergence rate is related to the rate of the true
+Chebyshev coefficients' decay.
+\end{abstract}
+
+\begin{keywords}
+ Chebyshev spectral methods, integration lattices, tractability
+\end{keywords}
+
+\begin{AMS}
+Primary 65N35, 65T40;~Secondary 65D05, 65D32
+\end{AMS}
+\section{Introduction} In this paper, we will present a Chebyshev
+spectral method on lattices for the approximation of non-periodic
+functions with domain $\mathcal X=[-1,1]^d.$ Spectral methods
+became popular in the mid-1970s. There are many papers and
+monographs that have significantly contributed to the state of the
+art, e.g., \cite{BernardiM1997}, \cite{Boyd2000},
+\cite{CanutoHQZ1988}, \cite{Don1994}, \cite{Fornberg1995}, \cite{Gottlieb1984},
+\cite{GottliebO1977}, \cite{Mercier1989},
+ \cite{ShenT07},\cite{Trefethen2000}
+ and the references listed in them.
+
+
+Suppose that $f$, defined in the domain $\mathcal X$, can be
+expressed by an absolutely convergent multidimensional Chebyshev
+series expansion:
+\begin{equation}\label{cheb}
+  f(\bx)=\dsum_{\bk \in {\N}^d_{0}}F(\bk)T_{\bk}(\bx),
+\end{equation}
+ where ${\N}^d_{0}:=\{\bk=(k_1,\cdots,k_d)^T \in {\Z}^d:\ k_j\geq {0}\}$ and
+\begin{equation}\label{ChebPoly}
+  T_{\bk}(\bx)=\dprod_{j=1}^{d}T_{k_j}(x_j)=\dprod_{j=1}^{d}
+   \cos(k_j\arccos x_j).
+\end{equation}
+The Chebyshev coefficients $F(\bk)$ can be derived by using the
+orthogonality relations of $T_{\bk}(\bx)$ with respect to the
+weight function $\omega(\bx)=\dprod_{j=1}^{d}
+\omega_j(x_j)=\dprod_{j=1}^{d}{\frac{1}{\sqrt{1-x_j^2}}}:$
+$$
+F(\bk)=\frac{c(\bk)}{\pi^d} \dint_{(-1,1)^d} f(\bx)T_{\bk}(\bx)
+\omega(\bx)\;d\bx,
+$$
+where
+$$
+ c(\bk):=2^{\sharp \{k_j\neq 0\}}.
+$$
+Because $T_{\bk}(\bx)$ can be written as in \eqref{ChebPoly} and
+cosine function is an even function, the Chebyshev polynomial and
+Chebyshev coefficients can be extended to the whole integral
+vector
+space $\Z^d$ %so that
+and thus
+  \begin{equation}\label{k-k}
+  F(\bk)=F(\abs{\bk})\quad \hbox{and}\quad
+ T_{\bk}(\bx)=T_{\abs{\bk}}(\bx)
+ \qquad \hbox{for all}\ \bk\in {\Z}^d,
+  \end{equation}
+  where $|\bk|=(|k_1|,\ldots,|k_d|)^T$.
+
+
+After the change of variables by $\bx=\cos(\pi\bthe):=
+\left(\cos(\pi\theta_1),\ldots, \cos(\pi\theta_d)\right)^T$, we
+obtain
+\begin{equation}F(\bk)={c(\bk)} \dint_{(0,1)^d} f(\cos(\pi\bthe))\dprod_{j=1}^d\cos(\pi k_j\theta_j)\;d\bx. \end{equation}
+% the
+%integrands defining $F(\bk)$ are periodic in
+%$\bthe:=\left(\theta_1,\ldots,\theta_d\right)$ and therefore can
+%be well approximated by the lattice rules (see e.g.,
+%\cite{Hickernell1998}, \cite{SloanJoe1994}).
+One then chooses a wavenumber space $\K \in {\N}^d_0$ and finds a
+quadrature rule  to approximate  $F(\bk)$ for
+$\bk\in\K$. % see also (\ref{hatF}) for the definition of $\hat
+%F(\bk)$.
+Denote the approximation to $F(\bk)$ by $\hat F(\bk).$ The
+function $f$ can therefore be approximated by
+\begin{equation}\label{fhatK}
+\hat{f}(\bx):=\dsum_{\bk\in {\K}}\hat{F}(\bk)T_{\bk}(\bx).
+\end{equation}
+Obviously, the approximation error depends on how close $\hat
+F(\bk)$ is to $F(\bk)$ for $\bk$ in the wavenumber space $\K$ and
+how fast $F(\bk)$ decays with respect to $\bk$ as $\bk$ gets away
+from $\K$. To minimize the approximation error, one needs to
+understand how it depends on design points and $\K$.
+
+The contents of the chapter are outlined as the following.
+Integration lattice is introduced in Section 2.  %The Chebyshev
+%spectral method on lattices is described in Section 3.
+ A formula for the error of this method
+and the worst-case error analysis are  presented in  Section 3. In
+Section 4, the tractability and strong tractability are discussed
+in weighted space. The numerical simulation result of the
+8-dimensional borehole function is provided in Section 5.
+
+\vskip5mm
+\section{Integration Lattice}
+An d-dimensional integration lattice, $L$, is a discrete subset of
+$\R^d$ that is closed under addition and subtraction and which
+contains the set of integer vectors $\Z^d$ as a subset. The node
+set for a lattice, $L$, is the set of points in the lattice that
+fall inside the unit cube, i.e., $\calP:=L\cap [0,1)^d$. A shifted
+lattice is defined as $\L_{\mathbf{\Delta}}:= \{
+\bz+\mathbf{\Delta}:\ \bz\in L\}$, where the shifted
+$\mathbf{\Delta}\in [0,1)^d$ is often chosen randomly to eliminate
+the bias in the algorithms. Grids aligned with the coordinate axes
+are rank-d lattices, since their node sets require $d$ generators.
+On the other hand, rank-1 lattices, whose node sets need only a
+single generator, are more commonly used to solve high dimensional
+problems. The readers may wish to consult \cite{Hickernell1998},
+\cite{HickernellNie2003}, \cite{HuaWang1981},
+\cite{Niederreiter1992}, and \cite{SloJoe92} for more background
+materials of integration lattices.
+
+\smallskip
+
+A few examples of integration lattices are given below and the
+figures of two-dimensional examples are also provided in Fig.
+\ref{nodeset} and Fig.\ref{duallattice}.
+\begin{Example}\label{exam1}
+Two dimensional lattices with $144$ points:
+\begin{enumerate}
+\item A rectangular grid, its node set (Fig.~\ref{nodeset-a}) and
+its dual lattice  (Fig.~\ref{duallatice-a}):
+\begin{subequations}
+\begin{eqnarray}
+&&L:=\{(i/12, j/12):\ i, j\in {\Z}\},\label{ga}\\
+&&\calP:=\{(i/12, j/12):\ i, j=0,1,2,\ldots, 11\},\label{gb}\\
+&&L^{\bot}:=\{12( i, j )  :\ i, j\in {\Z}\}.\label{gc}
+\end{eqnarray}
+\end{subequations}
+\item A rank-$1$ lattice, its node set (Fig.\ref{nodeset-c}) and
+its dual lattice (Fig.\ref{duallatice-c}):
+\begin{subequations}
+\begin{eqnarray}
+&&L:=\{(1,89)i/144 +(0,1)j:\ i, j\in {\Z}\},\label{La}\\
+&&\calP:=\{(1,89)i/144\quad\hbox{mod}\ 1:\ i=0,\ldots, 143\},\label{Lb}\\
+&&L^{\bot}:=\{(144,0)i+(-89,1)j:\ i, j\in {\Z}\}.\label{Lc}
+\end{eqnarray}
+\end{subequations}
+\item Shifted lattice ($L$ is defined as in \eqref{La}) with
+$\mathbf{\Delta}=(1,89)/288$ and its node
+set (Fig.\ref{nodeset-d}):
+\begin{subequations}
+\begin{eqnarray}
+&&L_{\mathbf{\Delta}}:=L + \mathbf{\Delta},\label{sa}\label{s3a}\\
+&&\calP:=\{(1,89)i/144+\mathbf{\Delta} \quad\hbox{mod}\ 1:\
+i=0,\ldots, 143\}.\label{sb}%,\\
+%&&L^{\bot}:=\{(144,0)i+(-89,1)j:\ i, j\in {\Z}\}.
+\end{eqnarray}
+\end{subequations}
+\end{enumerate}
+\end{Example}
+
+\begin{Example}
+Three dimensional lattices with $2^9$ points:
+\begin{enumerate}
+\item A rectangular grid, its node set and its dual lattice:
+\begin{subequations}
+\begin{eqnarray}
+&&L:=\{(i/2^{3}, j/2^{3}, k/2^{3}):\ i, j, k
+\in {\Z}\},\label{g3a}\\
+&&\calP:=\{(i/2^{3}, j/2^{3}, k/2^{3}):\ i, j,
+k=0,1,2,\ldots, 2^{3}-1\},\label{g3b}\\
+&&L^{\bot}:=\{ (i, j ) 2^3 :\ i, j,k\in {\Z}\}.\label{g3c}
+\end{eqnarray}
+\end{subequations}
+
+\item A rank-$1$ lattice, its node set and its dual lattice:
+\begin{subequations}
+\begin{eqnarray}
+\centering &&L:=\{(1,249,249^2)i/2^{9}+ (0,1,0)j+ (0,0,1)k:\
+i, j, k\in {\Z}\},\label{L3a}\\
+&&\calP:=\{(1,249,249^2)i/2^{9}\quad\hbox{mod}\ 1:\ i=0,\ldots,
+2^{9}-1\},\label{L3b}\\
+&&L^{\bot}:=\{(2^9,0,0)i +(-249,1,0 )j+( -249^2,0,1 )k: i,j,k\in
+{\Z}\}.\label{L3c}
+\end{eqnarray}
+\end{subequations}
+\item Shifted lattice ($L$ is defined as in \eqref{L3a}) with
+$\mathbf{\Delta}
+=(1,249,249^2)/2^{10}$ and its node set :%and its dual lattice:
+\begin{subequations}
+\begin{eqnarray}
+&&L_{\mathbf{\Delta}}:=L + \mathbf{\Delta},\\
+&&\calP:=\{(1,249,249^2)i/2^{9}+ \mathbf{\Delta} \quad\hbox{mod}\
+1:\ i=0,\ldots, 2^{9}-1\}.
+\end{eqnarray}
+\end{subequations}
+\end{enumerate}
+\end{Example}
+
+
+\begin{figure}
+\centering \subfigure[Node Sets in
+\eqref{gb}]{\label{nodeset-a}\includegraphics[width=7cm,height=7cm]{./eps/grid.eps}}\\
+\subfigure[Node Set in
+\eqref{Lb}]{\label{nodeset-c}\includegraphics[width=7cm,height=7cm]{./eps/goodlattice.eps}}\\
+\subfigure[Node Set in
+\eqref{sb}]{\label{nodeset-d}\includegraphics[width=7cm,height=7cm]{./eps/shiftgoodlattice.eps}}
+ \caption{Node set of  some two-dimensional integration lattices in Example \ref{exam1}.} \label{nodeset}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\subfigure[Dual Lattice in \eqref{gc}]{\label{duallatice-a}\includegraphics[width=7cm,height=7cm]{eps/dualforgrid.eps}}\\
+\subfigure[Dual Lattice in
+\eqref{Lc}]{\label{duallatice-c}\includegraphics[width=7cm,height=7cm]{eps/dualforgoodlattice.eps}}
+ \caption{Dual lattice of  some two-dimensional lattices in Example \ref{exam1}.} \label{duallattice}
+\end{figure}
+
+If one projects the points of grids in the half unit cube, as
+shown in Fig.\ref{nodeset-a}, onto $x_1$ axis ($x_2$ axis), there
+are only $\sqrt{144}=12$ points falling on the axis while for the
+node set of rank-$1$ lattice, there are $144$ projected points on
+each axis. Generally speaking, in every $s$-dimensional subspace,
+$1\leq s\leq d,$ for a $d$-dimensional rectangular grid, there are
+only $n^{s/d}$ projected points on each axis, while for the node
+set of rank-$1$ integration lattice, there are always $n$
+projected points. This is one of the features which make rank-$1$
+integration lattices outperform rectangular grids.
+
+The set of all integer vectors, ${\Z}^d$, may be written as
+${\calV}_n\oplus L^\bot$, where $\oplus$ denotes the direct sum,
+and ${\calV}_n$ is a set of $n$ $d$-dimensional integer vectors
+having the property that any two distinct vectors in ${\calV}_n$
+differ by a vector that is not in the dual lattice, i.e.,
+\begin{equation}                                 \label{calV-condition-1}
+\bnu,\bmu\in{\calV}_n \text{ and } \bnu\neq\bmu
+ \quad\Rightarrow \quad \bnu-\bmu\notin L^\bot.
+\end{equation}
+Assume that $\bzero\in{\calV}_n.$ There are many ways to choose
+${\calV}_n.$  We can define a ``size" function of  wavenumbers and then use it to identify the appropriate wavenumbers among sets of wavenumbers. One most used   ``size"  function $r,$ is deifned as below
+\begin{equation}\label{r}r_\bgam(\bnu)=\dprod_{j=1}^d
+r_{\gamma_j}(\nu_j),\end{equation}
+ where $$r_{\gamma_j}(\nu_j) =
+ \left\{\begin{array}{l}
+1 \ \ \ \ \ \ \ \,\mbox{if } \,\nu_j=0, \\
+\frac{|\nu_j|}{\gamma_j} \ \ \ \mbox{otherwise };
+\end{array}\right. $$
+where ${\boldsymbol \gamma}=(\gamma_1, \gamma_2,\cdots)$with  $
+1\ge \gamma_1\ge \gamma_2\ge \cdots\ge 0.$  Note that  $r$
+function is defined slight differently from the literature.
+\cite{KuoSloWoz05a} used $r_{\alpha}(\bgam,\bnu),$ where
+$r_{\alpha}(\bgam,\bnu)=[r_{\bgam^{-1/\alpha}}(\bnu)]^\alpha.$
+Please be careful when refer to the paper.
+
+One shortcoming of  the above ``size" function is that $0$ and $1$ take the same ``size", which is clearly not the case. To differentiate  $0$ and $1$, we define a new ``size" function as below,
+\begin{equation}\label{rnew}\tilde{r}_\bgam(\bnu)=\dprod_{j=1}^d
+\tilde{r}_{\gamma_j}(\nu_j),\end{equation}
+ where \begin{equation}\tilde{r}_{\gamma_j}(\nu_j) =\frac{|\nu_j|}{\gamma_j}+1. \end{equation}
+ Clearly, $1 \le \tilde{r}_{\gamma_j}(\nu_j)/ r_{\gamma_j}(\nu_j)\le 1+\gamma_j$, and $\tilde{r}_{\gamma_j}(\nu_j)/ r_{\gamma_j}(\nu_j)=1,$
+if $\nu_j \rightarrow \infty,$ for all $j=1,\cdots,d.$
+
+
+With the newly defined ``size" function $\tilde{r}_\bgam(\bnu)$,  ${\calV}_n$ is then chosen to satisfy
+ \begin{equation}                      \label{calV-condition-2}
+\tilde{r}_{\bgam}(\bnu)\leq \tilde{r}_{\bgam}(\bnu+\blam), \quad
+ \forall\bnu\in{\calV}_n, \quad \forall\blam\in{L^\bot}.
+ \end{equation}
+ This may be done by ranking wave numbers $\bnu\in{\Z^d}$ in terms of
+ their $\tilde{r}_{\bgam}(\bnu)$ values, and then choosing the first $n$ distinct wave numbers satisfying the condition
+ \eqref{calV-condition-1}.
+% have distinct values of $\bnu$.crospongding
+In particular, if node set of  rank-$1$
+ lattice is used,  $\bnu_i \in \calV_n,\, i=0,\cdots,n-1$ are chosen to satisfy
+ condition (\ref{calV-condition-2}) and
+  \begin{equation}                      \label{calV-condition-3}
+ \bnu_i \cdot \bh =i \mod n.
+ \end{equation}
+With the definition of $\calV_n,$ define
+\begin{eqnarray}                            \label{tilde D}
+ \widetilde{D}_{\alpha,q,\bgam}({\calV}_n)&=&\Big\|
+  \df{1_{\bmu\notin{\calV}_n}}{[\tilde{r}_{\bgam}(\bmu)]^{\alpha}}\Big\|_q\nonumber\\&=&\left\{
+  \begin{array}{ll}
+    \left(\dprod_{j=1}^d\gamma_j^{\alpha q}\left(2\bzeta(\alpha q,\gamma_j )-1\right)-\left\|\df{1_{\bnu\in{\calV}_n}}{[\tilde{r}_{\bgam}(\bnu)]^{\alpha}}
+    \right\|_q^q\right)^{1/q},
+   & 1<q<\infty,
+   \crno
+   \sup\limits_{\bmu\notin{\calV}_n}[\tilde{r}_{\bgam}(\bmu)]^{-\alpha}, & q=\infty,
+   \end{array} \right.
+\end{eqnarray}
+The two-variable function $\bzeta$ in the above equation is the Hurwitz zeta function. When the second variable equals to $1$, it becomes Riemann zeta function and hence normally is written as a one-variable function. (see \cite{Hickernell1998} and \cite{SloJoe92}).
+
+It is obviously true that $\tilde{r}_{\gamma}(\nu)\ge {r}_{\gamma}(\nu)$.  Hence by similar proof as in  \cite[Lemma 1.13]{Zengthesis},  the following lemma holds.
+
+\vskip5mm   \begin{Lemma}\label{CBC} Suppose $\alpha q>1$ and $n$
+is large enough. Then a generating vector of a rank-$1$
+integration lattice can be obtained  by component-by-component
+construction  such that
+\begin{equation}\label{eqnBCB}\widetilde{D}_{\alpha, q,\bgam}({\calV}_n)= \mathcal{O}\left(
+{n^{-\frac{\alpha-1/q}{2-1/(\alpha q)} +\epsilon}}\right).
+\end{equation} The big $\mathcal{O}$-notation in \eqref{eqnBCB} dependent on $d.$
+ \noindent Let $1/q\le v <\alpha.$  If $\dsum_{j=1}^{+\infty} \gamma_{j}^{\alpha /v}<+\infty,$ then
+\begin{equation}\label{imSTRsBCB}\widetilde{D}_{\alpha,
+q,\bgam}({\calV}_n)
+=\mathcal{O}\left(n^{-\frac{v-1/q}{2-1/(qv)}}\right),\end{equation}
+if
+$a:=\lim\sup_{d\rightarrow\infty}\sum\limits_{j=1}^{d}\gamma_j^{{
+\alpha/v}}/\log(d+1)<\infty,$ then
+\begin{equation}\label{imTRsBCB}
+\widetilde{D}_{\alpha, q,\bgam}({\calV}_n)= \mathcal{O}\left(
+d^{b}{n^{-\frac{v-1/q}{2-1/(qv)}}}\right).\end{equation} The
+implied factor in the big $\mathcal{O}$-notations in
+\eqref{imSTRsBCB} and \eqref{imTRsBCB} are independent of $d$. The
+exponent $b$ is any positive number greater than $2va\bzeta({
+\alpha/v})$ and $\frac{v-1/q}{2-1/(qv)}$ can be arbitrarily close
+to $\frac{\alpha-1/q}{2-1/(\alpha q)}.$
+\end{Lemma}
+
+
+
+
+\vskip8mm  \section{Chebyshev Spectral Methods on Lattices}
+
+Define  variation of a function $f$ as
+\begin{equation}\label{V-beta-f}
+ V_{\alpha,p,\bgam}(f):=  \norm{F(\bk)[\tilde{r}_\bgam(\bk)]^{\alpha}1_{\bk\in {\N}^d_0}}_p, p\ge 1.
+ \end{equation}
+Variation of a function is a measure of the variability of a
+function. The parameter $\alpha$ is used to characterize how fast
+the Chebyshev coefficients decay.
+ Furthermore, the function space ${\calF}_{\alpha,p,\bgam}:=\{f:\,\,
+  V_{\alpha,p,\bgam}(f)< \infty\}$ consists of all functions with finite variation. The weight $\gamma_j$ of the Banach space $F_{\alpha,p,\bgam}$
+moderates the behavior of functions with respect to the $j$th
+variable. Small $\gamma_j$ means that functions depend weakly on
+the $j$th variable. Functions concerned in this paper are
+demanded in the function space ${\calF}_{\alpha,p,\bgam}.$
+The variation used in literature is normally defined by $\norm{F(\bk)[{r}_\bgam(\bk)]^{\alpha}1_{\bk\in {\N}^d_0}}_p$. The two variations are equivalent, because the ratio of these two variations (with $V_{\alpha,p,\bgam}(f)$ defined in \eqref{V-beta-f} as the numerator) is no less than $1$ and no greater than $\prod_{j=1}^d(1+\gamma_j)^\alpha$.
+
+
+
+
+To approximate the Chebyshev coefficients, the node set  used here
+is a little different from the classic one introduced in Section
+1, since the points will fall onto $[-1, 1]^d$ after a cosine
+transformation. Let the $n$-cardinality node set of a shifted
+lattice be
+$$
+P:=\{i\bh/n+ \mathbf{\Delta},\ i=0,\ldots, n-1\},
+$$
+where the $d$-vector $\bh$ is a rank-$1$ lattice generator and
+$\mathbf{\Delta} =\bh/(2n)$. In other words, the node set is a
+ set consisting of points generated by $\bh/(2n)$ times odd integers from $1$ to
+$2n-1.$ Define the dual lattice
+$$
+L^{\bot}:=\{\bl\in {\Z}^d:\quad \bl\cdot \bh=0 \quad\hbox{mod}\
+2n\}.
+$$
+  In
+Fig.~3.1, the left panel shows what  $P$ looks like after cosine
+transformation with $n= 64 $ and $h=(1 \,\,\, 75)^T;$ the right
+panel displays $64$ grid points in the half open unit cube  after
+a cosine transformation.
+\begin{figure}[htbp]\label{NewCheblattice}
+\begin{center}
+\includegraphics[height=7cm, width=7cm, angle=0] {eps/NewChebgrid.eps}
+\includegraphics[height=7cm, width=7cm, angle=0]{eps/NewCheblattice.eps}
+\caption{Left:$64$ rectangular grid points after cosine transformation ; right: set $P$ with $n= 64 $ and $h=(1 \,\,\, 75)^T$ after cosine
+ transformation. }
+\end{center}
+\end{figure}
+The reason to choose $P$ and the dual lattice in this way is
+because of the following lemma. \vskip5mm   \begin{Lemma} With the
+above definitions of node set $P$ and dual lattice $L^{\bot}$, it
+holds that
+\begin{equation}\label{shiftlatticeproperty}
+\frac{1}{n} \dsum_{\bz\in  P} \cos(\pi \bl\cdot \bz)= \left\{
+\begin{array}{ll}
+(-1)^{\bl\cdot \bh/(2n)},&
+\bl\in L^{\bot};\\
+0,& \bl\notin L^{\bot}.
+\end{array}
+\right.
+\end{equation}
+\end{Lemma}
+\begin{proof} Consider the sum, ${\displaystyle \frac{1}{n}
+\dsum_{\bz\in P} e^{\imath \pi \bl\cdot \bz}}$, where
+$\imath=\sqrt{-1}$. If $\bl\notin L^{\bot}$, i.e., $\bl\cdot
+\bh\neq 0\ \hbox{mod}\ 2n$, then
+\begin{eqnarray}\label{thesum}
+\frac{1}{n} \dsum_{\bz\in P} e^{\imath \pi \bl\cdot \bz}
+ &=& \frac{1}{n} \dsum_{i=0}^{n-1} e^{\imath \pi (2i+1)\bl
+\cdot \bh/(2n)}= \frac{1}{n} \frac{e^{\imath \pi \bl \cdot
+\bh/(2n)} - e^{\imath \pi (2n+1)\bl \cdot \bh/(2n)}}{1- e^{\imath
+\pi \bl \cdot
+\bh/n}}\nonumber\\
+&=& \frac{1}{n} \frac{1- (-1)^{\bl\cdot \bh}} {e^{-\imath \pi \bl
+\cdot \bh/(2n)}- e^{\imath \pi \bl \cdot \bh/(2n)}}
+ =
+\frac{\imath(1-(-1)^{\bl\cdot\bh})}
+{2n\sin(\pi\bl\cdot\bh/(2n))}.
+\end{eqnarray}
+%And it
+This means that the real part of the sum is zero if $\bl\notin
+L^{\bot}$, that is
+\begin{equation}
+\frac{1}{n} \dsum_{\bz\in P} \cos({\pi \bl\cdot \bz})
+ =0.
+\end{equation}
+If $\bl\in L^{\bot}$, i.e., $\bl\cdot \bh = 0\ \hbox{mod}\ 2n$,
+from (\ref{thesum}) then
+\begin{equation}
+\frac{1}{n} \dsum_{\bz\in P} e^{\imath \pi \bl\cdot \bz}
+ =(-1)^{\bl\cdot \bh/(2n)}.
+\end{equation}
+Hence (\ref{shiftlatticeproperty}) follows.   \end{proof}
+
+\vskip5mm
+
+ Change the variable $\bx=(\cos(\pi \theta_1), \ldots, \cos(\pi
+\theta_d))^T$. The expansion (\ref{cheb}) is then equivalent to
+\begin{eqnarray}
+ f(\bx)&=& \dsum_{\bk\in {\N}^d_{0}} F(\bk) \dprod_{j=1}^{d} \cos(\pi
+ k_j\theta_j)\nonumber\\
+  &=& \dsum_{\bk\in {\N}^d_{0}} F(\bk) \dprod_{j=1}^{d}
+  \frac{e^{\imath \pi k_j\theta_j}
+  + e^{-\imath \pi k_j \theta_j}}{2}\nonumber\\
+  &=& \dsum_{\bk\in {\Z}^d} \frac{F(|\bk|)}{c(\bk)} e^{\imath \pi
+  \bk\cdot \bthe},\qquad\hbox{where}\
+  |\bk|=(|k_1|,\ldots,|k_d|)\nonumber\\
+  &=& \dsum_{\bk\in {\Z}^d} \frac{F(|\bk|)}{c(\bk)} \cos(\pi
+  \bk\cdot \bthe),\qquad\hbox{since}\ f(\bx)\ \hbox{is
+  real}.
+\end{eqnarray}
+Let the expanded coefficients $G(\bk):=F(|\bk|)/c(\bk), \bk \in {\Z}^d$, hence
+\begin{equation}\label{fcospiz}
+ f(\cos(\pi \bz))=\dsum_{\bk\in {\Z}^d}
+ G(\bk)\cos(\pi \bk \cdot \bz).
+\end{equation}
+To make the proof more clear,  define $\hat{G}(\bk)$ as the
+following
+
+\begin{eqnarray}\label{hatG}
+ \hat{G}(\bk) &:=& \frac{1}{n} \dsum_{\bz\in P}f(\cos(\pi \bz))
+ \cos(\pi\bk \cdot \bz)\nonumber\\
+ &=& \frac{1}{n} \dsum_{\bz\in P} \left[\dsum_{\bl\in {\Z}^d}
+ {G(\bl)}
+ \cos(\pi \bl \cdot \bz)\right]\cos(\pi\bk \cdot
+ \bz)\nonumber\\
+ &=& \frac{1}{2} \dsum_{\bl\in {\Z}^d}
+ {G(\bl)} \frac{1}{n}
+ \dsum_{\bz\in P} \big[\cos(\pi(\bl+\bk)\cdot \bz)
+  + \cos(\pi(\bl-\bk)\cdot \bz)\big]\nonumber\\
+  &=& \frac{1}{2} \dsum_{\bl\in {\Z}^d}
+{G(\bl)}
+  \Big[(-1)^{(\bl +\bk)\cdot \bh/(2n)}\delta_{(\bl+\bk)
+  \cdot \bh\ \hbox{\small mod}\ 2n, 0}
+  \nonumber\\
+  &&\qquad \qquad \qquad
+  +\; (-1)^{(\bl - \bk)\cdot \bh/(2n)}\delta_{(\bl-\bk)
+  \cdot \bh\ \hbox{\small mod}\ 2n, 0}
+   \Big],
+\end{eqnarray}
+where in the last equality, (\ref{shiftlatticeproperty}) have been
+used.
+ Let
+\begin{eqnarray*}
+ -\bl'&=&\bl +\bk,\quad\hbox{then}\
+ \bl=-\bk-\bl';\\
+ \bl''&=&\bl -\bk,\quad\hbox{then}\
+ \bl=\bk+\bl''.
+\end{eqnarray*}
+Substitute these into the above expression for $\hat{G}(\bk)$.
+Then
+
+\begin{eqnarray}\label{Aliasing}
+ \hat{G}(\bk) &=& \frac{1}{2} \left[
+ \dsum_{\bl'\in L^{\bot}}
+  {G(-\bk-\bl')}
+ (-1)^{-\bl'\cdot \bh/(2n)} +
+ \dsum_{\bl''\in L^{\bot}}
+  {G(\bk+\bl'')}
+ (-1)^{\bl''\cdot \bh/(2n)}\right]\nonumber\\
+ &=& \dsum_{\bl\in L^{\bot}} {G(\bk + \bl)}
+ (-1)^{\bl\cdot \bh/(2n)}\nonumber\\
+ &=& {G(\bk)}
+ + \dsum_{0\neq\bl\in L^{\bot}} {G(\bk + \bl)}
+ (-1)^{\bl\cdot \bh/(2n)}.
+\end{eqnarray}
+In \eqref{fhatK}, $\hat{F}(\bk)$, the approximation of  $F(\bk)$, hence can be calculated by a sum of $\hat{G}(\bl)$ for some $|\bl|=\bk$.
+
+How to choose ${\K}$ then becomes a very
+important issue. ${\K}$ should have the following two properties.
+\begin{enumerate}\label{prpt}
+\item $F(\bx)$ should be small enough if
+$\bk\in\Z^d\setminus{{\K}};$ \item $\hat{F}(\bk)$ should be a
+good approximation to  ${F}(\bk)$ if
+$\bk\in {\K}.$
+\end{enumerate}
+
+ According to the first property  of ${\K}$, one would like to
+choose ${{\K}}$ in a way that it contains all important wavenumbers.
+Hence, ${\K}$ should contain the wavenumbers near the origin and the
+axes. Furthermore, the aliasing property listed in
+\eqref{Aliasing} reminds us of the $\calV$ introduced in section 1
+and motivates us to use corresponding nonnegative wavenumbers of $\calV_{2n}$
+to construct the wavenumber ${\K}$,
+
+
+
+Let
+$${\calV}_{2n}^{+}=\{ \bk\in{\N}_0^d: \bk=|\bl|, \bl\in  {\calV}_{2n}\}.$$ 
+The important wavenumber set $\K$ is then chosen as ${\calV}_{2n}^{+}$. The Chebyshev coefficient $F(\bk)$ for $\bk \in {\calV}_{2n}^{+}$ can be approximated by $$\hat{F}(\bk)=\sum_{|\bl|=\bk,\\\bk\in {\calV}_{2n}}\hat{G}(\bl).$$
+
+The approximation of $f(\bx)$  then can be formulated by
+\begin{eqnarray}\label{fhat1}
+\hat{f}(\bx)
+&=& \dsum_{\bk\in {\calV}_{2n}^+}\left(\dsum_{\substack{|\bk'|=\bk\\\bk'\in {\calV}_{2n}}}\hat{G}(\bk')\right)T_{\bk}(\bx),
+\end{eqnarray}
+The
+two-dimensional ${\calV}_{2n}^+$ is drawn in Fig.~3.2, which shows
+that ${\calV}_{2n}^+$ is of the desired shape containing almost
+all the small wavenumbers.
+
+\begin{figure}[ht]\label{wvnK^+}
+\begin{center}
+\includegraphics[width=13cm,height=13cm]{eps/wavenumber.eps}
+\caption{Two-dimensional wavenumber space ${\calV}_{2n}^+$ for
+$n=17,72,305,1292$ respectively.}
+\end{center}
+\end{figure}
+
+Due to the unique structure of node set of lattice, we can use the fast cosine transformation to calculate $\hat{G}(\bk)$ for $\bk \in {\cal V}_{2n}$.
+Suppose $\bk_i \in {\cal V}_{2n}$ and $\bk_i\cdot\bh = i \mod 2n$, and $f_j={f}(\bx_j),\bx_j \in P.$
+According to (\ref{hatG}) we can compute $\hat{G}(\bk_i)$ as
+\begin{equation*}
+n\hat{G}(\bk_i)=\mathop \sum \limits_{j = 0}^{n-1}  f_j \cos \left((2j+1)\frac{\bk_i\cdot\bh}
+{{2n}}\pi \right)=(-1)^{(\bk_i\cdot\bh - i)/(2n) } \mathop \sum \limits_{j = 0}^{n-1}  f_j \cos \left(i\frac{{2j + 1}}
+{{N}}\pi \right).
+\end{equation*}
+We therefore can use discrete cosine transform (MATLAB DCT subroutine ) to compute the coefficients.
+
+
+\section{Error Analysis}
+The approximation error depends on how close $\hat F(\bk)$ is to
+$F(\bk)$ for $\bk$ in the wavenumber space and how fast $F(\bk)$
+decays with $\bk$ as $\bk$ gets away from the origin. To minimize
+the approximation error, one needs to understand how it depends on
+$\calP$ and $\calV$. The errors in the algorithm come from two
+sources. One source is the wavenumbers not contained in $\calV$.
+The Chebyshev coefficients of these wavenumbers are approximated by
+zero. Thus, one would like to choose $\calV$ so that it contains
+all important wavenumbers.  For the wavenumbers contained in
+$\calV$, the estimates of the Chebyshev coefficients are
+contaminated by the effects of aliasing.  Thus, we want to choose
+$\K$ to contain all the small wavenumbers and no wavenumbers
+aliased with each other. Aliasing is a phenomenon for both grids
+and rank-1 lattices.  Two wavenumbers are aliased if their
+difference is contained in the dual lattice, $L^\perp$.  Thus, one
+may judge the quality of a lattice by its corresponding dual
+lattice.  For well-chosen rank-1 lattices, $\K$ can contain almost
+all wavenumbers $\bk=(k_1, \ldots, k_d)$ provided that
+$\tilde{r}_\bgam(\bk)< C n^{1/2-\epsilon}$. 
+%However, for a grid, $\K$
+%cannot contain wavenumbers $\bk=(k_1, \ldots, k_d)$ with any
+%$\abs{k_j} > n^{1/d}$, a constraint that becomes restrictive as
+%$d$ increases. 
+See, e.g., Niederreiter \cite{Niederreiter1992},
+Sloan \& Joe \cite{SloJoe92}, and Li \& Hickernell \cite{LiHic03}
+for a discussion on the quality measures for lattices.
+ \smallskip
+
+
+Define the weighted $L_2$ norm as
+\begin{equation} \label{weiL2}
+\|f\|_{L_2^{\omega}(\mathcal X)}:= \left(\dint_{\mathcal
+X}[f(\bx)]^2 \omega (\bx)d\,\bx\right)^{1/2}.\end{equation}
+The
+asymptotic bound for \eqref{fhat1} in the weighted $L_2$ norm can
+then be derived for large enough $n$'s as in the following.
+
+\vskip5mm   \begin{Theorem}\label{C4err} Let $f \in
+{\calF}_{\alpha,p,\bgam}$ and $\hat{f}$ be as in \eqref{fhat1}.
+Then
+\begin{eqnarray}
+ \norm{f-\hat{f}}_{L_2^{\omega}(\mathcal X)} \leq 2\pi^{d/2}\widetilde{D}_{\alpha ,q,\bgam}(\calV_{2n})
+  V_{\alpha,p,\bgam}(f),\quad \frac{1}{p}+\frac{1}{q}=1.\end{eqnarray}Thus, there exist rank-$1$
+integration lattices such that
+\begin{eqnarray}\label{eqn:C4err}
+ \norm{f-\hat{f}}_{L_2^{\omega}(\mathcal X)}=\mathcal{O}\left( n^{-\frac{\alpha+ 1/q}{2-1/(\alpha q)}+\epsilon}\right).
+\end{eqnarray}
+The implied factor in the big $\mathcal{O}$-notation is dependent
+on $\alpha$ and $d.$
+\end{Theorem}
+ \begin{proof} By the definition of
+$\hat{f}(\bx)$ and the aliasing property (\ref{Aliasing}), it is
+clear that the errors in the algorithm come from two sources. One
+source is the wavenumbers not contained in ${\calV}_{2n}^+$. The
+Chebyshev coefficients of these wavenumbers are approximated by
+zeros. For the wavenumbers contained in ${\calV}_{2n}^+$, the
+estimates of the Chebyshev coefficients are contaminated by the
+effects of aliasing and the corresponding expanded coefficients whose wavenumbers not in ${\calV}_{2n}$. To proceed, there are still two facts to be  mentioned. One is  $F(\bk)=\sum_{|\bk'|=\bk,\atop\bk'\in {\Z}^d }{G(\bk')}$ with  $\#\{\bk'\in {\Z}^d : |\bk'|=\bk,\bk\in {\N}^d_{0}\}=c(\bk)$, the other is   the famous inequality: arithmetic mean is less or equal than the quadratic mean. Thus  $|F(\bk)|^2/c(\bk) \le \sum_{|\bk'|=\bk,\atop\bk'\in {\Z}^d }\abs{G(\bk')}^2$.  It hence follows that
+
+\begin{eqnarray}
+&&\norm{f-\hat{f}}_{L_2^{\omega}(\mathcal X)}\\
+& =& \pi^{d/2}\left(\dsum_{\bk\in{\calV}_{2n}^+}\frac{1}{c(\bk)}{{\abs{F(\bk)-\sum_{|\bk'|=\bk,\atop\bk'\in {\calV}_{2n}}\hat{G}(\bk')}}^2}
++ \dsum_{\bk\notin{\calV}_{2n}^+,\atop \bk \in
+{\N}^d_{0}}\frac{1}{c(\bk)}{\abs{F(\bk)}^2}\right)^{1/2}\nonumber\\
+& =& \pi^{d/2}\left(\dsum_{\bk\in{\calV}_{2n}^+}\frac{1}{c(\bk)}{{\abs{\sum_{|\bk''|=\bk,\atop\bk''\in {\Z}^d}G(\bk'')-\sum_{|\bk'|=\bk,\atop\bk'\in {\calV}_{2n}}\hat{G}(\bk')}}^2}
++ \dsum_{\bk\notin{\calV}_{2n}^+,\atop \bk \in
+{\N}^d_{0}}\frac{1}{c(\bk)}{\abs{F(\bk)}^2}\right)^{1/2}\nonumber\\
+& \leq& \pi^{d/2}\left(\dsum_{\bk\in{\calV}_{2n}^+}\left(\dsum_{|\bk'|=\bk,\atop\bk'\in {\calV}_{2n}}\abs{G(\bk')-\hat{G}(\bk')}^2
++\sum_{|\bk'|=\bk,\atop\bk'\notin {\calV}_{2n}}\abs{{G}(\bk')}^2\right)+ \dsum_{\bk\notin{\calV}_{2n}^+,\atop \bk \in
+{\N}^d_{0}}\dsum_{|\bk'|=\bk,\atop\bk'\in {\Z}^d}{\abs{G(\bk')}^2}\right)^{1/2}\nonumber\\
+& \leq& \pi^{d/2}\left(\dsum_{\bk\in{\calV}_{2n}\atop\bk\in {\Z}^d}\abs{G(\bk)-\hat{G}(\bk)}^2
++\sum_{\bk\notin {\calV}_{2n}\atop\bk\in {\Z}^d}\abs{{G}(\bk)}^2\right)^{1/2}\nonumber\\
+& \leq& \pi^{d/2}\left(\dsum_{\bk\in{\calV}_{2n}}\dsum_{0\neq\bl\in
+L^\bot} \abs{G(\bk+\bl)} +
+\dsum_{\bk\notin{\calV}_{2n}} \abs{G(\bk)}\right)\nonumber\\
+&\leq& 2\pi^{d/2}
+\left(\dsum_{{\Z}^d \ni \bk\notin{\calV}_{2n}} |G(\bk)[\tilde{r}_\bgam(\bk)]^{\alpha}|^p\right)^{\frac{1}{p}}
+\norm{[\tilde{r}_\bgam(\bk)]^{-\alpha}1_{{\bk\notin
+{\calV}_{2n}}}}_q\nonumber\\
+&\le&  2\pi^{d/2}\left(\dsum_{\bk\in{\Z}^d} {\frac{F(|\bk|)}{c(\bk)}[\tilde{r}_\bgam(\bk)]^{\alpha}}^p\right)^{\frac{1}{p}}
+\norm{[\tilde{r}_\bgam(\bk)]^{-\alpha}1_{{\bk\notin
+{\calV}_{2n}}}}_q\nonumber\\
+&=&  2\pi^{d/2}\left(\dsum_{\bk\in{\N}^d_0} \dsum_{|\bl|=\bk}\frac{\abs{F(|\bl|)}^p[\tilde{r}_\bgam(\bl)]^{\alpha p}}{[c(\bl)]^p}\right)^{\frac{1}{p}}
+\norm{[\tilde{r}_\bgam(\bk)]^{-\alpha}1_{{\bk\notin
+{\calV}_{2n}}}}_q\nonumber\\
+&\leq&  2\pi^{d/2}\left(\dsum_{\bk\in{\N}^d_{0}} \abs{{F(\bk)}[\tilde{r}_\bgam(\bk)]^{\alpha}}^p\right)^{\frac{1}{p}}
+\norm{[\tilde{r}_\bgam(\bk)]^{-\alpha}1_{{\bk\notin
+{\calV}_{2n}}}}_q\nonumber\\
+& \leq &
+2\pi^{d/2}
+  V_{\alpha,p,\bgam}(f)\widetilde{D}_{\alpha ,q,\bgam}(\calV_{2n}).
+\end{eqnarray}
+With the equality (\ref{eqnBCB}), the proof is
+completed.\end{proof}
+
+
+
+\vskip8mm  \section{Tractability and Strong Tractability}
+
+From the proof of Theorem \ref{C4err}, the implied factor in the
+big $\mathcal{O}$-notation of \eqref{eqn:C4err} is  increasing
+exponentially with increasing $d.$ Hence when dimension goes to
+infinity, the constants would go to infinity too. How to eliminate
+the effect of dimension or constrain the increase of the factor to
+polynomial rate shall be studied in this section.
+
+Suppose that there exists an algorithm $s(f)$ to approximate $f$
+for the function $f$ in the function space $\mathcal F.$  The
+worst case error of the algorithm $s(f)$ using $n$ sample points
+is
+$$\err\hspace{0.01cm}(n,\mathcal F)=
+\sup\limits_{{\norm{f}}_{\mathcal F} \leq 1 }\norm{s(f)-f}.$$ The
+initial error is
+\begin{equation}\label{initialerror}\err\hspace{0.01cm}(0,\mathcal F)=
+\sup\limits_{{\norm{f}}_{\mathcal F} \leq 1
+}\norm{f}.\end{equation} For $\varepsilon\in(0,1)$ and $d\ge 1,$
+let $n^{wor}(\varepsilon,\mathcal F)$ be the minimal number of
+function samples needed to solve the problem, i.e.,
+$$n^{wor}(\varepsilon,\mathcal F):= \min\{n: \err\hspace{0.01cm}(n,\mathcal F)\le \varepsilon\err\hspace{0.01cm}(0,\mathcal F) \}.$$
+The algorithm for weighted Banach space is  tractable  iff there
+are non-negative numbers $C, p$ and $q$ such that
+$$n^{wor}(\varepsilon,\mathcal F)\le C
+\varepsilon^{-p}d^{q},\quad \forall \varepsilon\in(0,1), \forall
+d\ge 1.$$ The  algorithm is  strongly tractable iff $q=0.$ In
+other words,  the algorithm for the weighted Banach space is
+tractable iff there are non-negative numbers $C, a$ and $b$ such
+that
+$$\err\hspace{0.01cm}(n,\mathcal F)\le C\err\hspace{0.01cm}(0,\mathcal F)
+n^{-a}d^{b},\quad  \forall d\ge 1.$$ The  algorithm is strongly
+tractable iff $b=0.$
+
+The tractability and strong tractability of the algorithm proposed
+by \eqref{fhat1} and \eqref{Aliasing} will be discussed here. The
+function space is now constrained to $\mathcal F_{\alpha,p,\bgam}$
+and $\norm{\cdot}$ is defined in \eqref{weiL2}.
+
+Obviously, the norm of  $f\equiv 1,$ $V_{\alpha,p,{\bgam}}(f)=1,$
+since the Chebyshev coefficient of the constant function $f$ is
+one at the origin and  zero otherwise. It can be obtained that
+$\norm{f}_{L_2^{\omega}(\mathcal X)}=\pi^{d/2}.$ The initial error
+defined in \eqref{initialerror} is greater than $\pi^{d/2}.$
+
+According to the Theorem \ref{C4err},  we  can obtain the following
+theorem. \vskip5mm
+\begin{Theorem}\label{trc4errrst}
+Let $f \in {\calF}_{\alpha,p,{\bgam}},$
+ $1/q\leq v<\alpha$ and $n$ is large enough. Then a
+generating vector of a rank-$1$ integration lattice can be
+obtained  by component-by-component construction such that
+ if $\dsum_{j=1}^{+\infty}
+\gamma_j^{\alpha/v}<+\infty,$  then
+\begin{eqnarray}
+\sup_{\|f\|_{\mathcal F_{\alpha,p,{\bgam}}}\leq 1}
+\norm{f-\hat{f}}_{L_2^{\omega}(\mathcal
+X)}[\err\hspace{0.01cm}(0,\mathcal F_{\alpha,p,{\bgam}})]^{-1}
+=\mathcal{O}\left(n^{-\frac{v-1/q}{ 2-1/(vq)}}\right);
+\end{eqnarray}if
+$\sum\limits_{i=1}^{\infty}\gamma_j^{\alpha/v}=\infty,$
+but
+$a:=\lim\sup_{d\rightarrow\infty}\sum\limits_{i=1}^{d}\gamma_j^{\alpha/v}/\log(d+1)<\infty,$
+then
+\begin{eqnarray}\sup_{\|f\|_{\mathcal F_{\alpha,p,{\bgam}}}\leq 1}
+\norm{f-\hat{f}}_{L_2^{\omega}(\mathcal
+X)}[\err\hspace{0.01cm}(0,\mathcal F_{\alpha,p,{\bgam}})]^{-1}
+=\mathcal{O}\left(d^{b}n^{-\frac{v-1/q}{ 2-1/(vq)}}\right) .
+\end{eqnarray}
+The implied factor in the big $\mathcal{O}$-notation is
+independent of $d$. The exponent $b$ is any positive number
+greater than $2av\bzeta\big(\alpha / v \big)$ and
+$\frac{v-1/q}{2-1/(qv)}$ can be arbitrarily close to
+$({\alpha-\frac{1}{q}})/({2-\frac{1}{\alpha q}}).$
+\end{Theorem}
+
+
+\vskip8mm  \section{Numerical Experiments}
+
+The $8$-dimensional borehole function described by
+\cite{MorMitYlv93}
+\begin{equation}\label{borehole}
+\displaystyle\frac{2\pi
+T_u(H_u-H_l)}{\log(\frac{r}{r_w})\left(1+\frac{2L
+T_u}{\log(\frac{r}{r_w})r_w^2K_w}+\frac{T_u}{T_l}\right)}
+\end{equation}
+is used  as the test function. The borehole function is a model
+for the flow rate of water from an upper to a lower aquifer
+through an impermeable rock with a borehole through that layer
+connecting them. Here $r,r_w$ are radii of the borehole and the
+surrounding basin respectively;
+ $T_l,T_u$ are  transmissivities of the upper and lower aquifers;
+ $H_l,H_u$ are potentiometric heads;
+ $L$ represents the length of the borehole;
+ $K_w$ denotes the conductivity.
+
+ The borehole function of equation (\ref{borehole}) is
+investigated over the following ranges:
+ \begin{eqnarray*}r_w &
+&\in [0.05, 0.15]\, m;\\ r && \in [100, 50000]\, m;\\ T_u && \in
+[63070, 115600] m^3/yr;\\ T_l &&\in [63.1, 116] \, m^3/yr;\\ H_u
+&&\in
+[990, 1110]\, m;\\ H_l &&\in [700, 820]\, m ;\\L &&\in [1120, 1680] \,m;\\
+K_w &&\in [9855, 12045] \, m/yr.
+\end{eqnarray*}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=12cm]{eps/borehole1.eps}
+\caption{Root relative squared  error for $8$-dimensional Borehole function.}
+\end{center}
+\end{figure}
+
+ The integer vector  $(1 ,17797,\cdots,17797^{d-1} )^T \mod 2n $, an extensible rank-1 lattice design introduced in  \cite{HicHong2000},
+is used  as $\bh$ in the numerical experiments. The corresponding important wavenumber sets are calculated by exhaustive search  and the weight in each dimension is chosen to be $1$. 
+
+For an algorithm ${\cal A}$, the root relative squared errors (RRSE) is defined by
+$$\frac{\sqrt{\sum_{i=1}^M ({\cal A}(f)(\bx_i)-f(\bx_i)})}{\sqrt{\sum_{i=1}^M (f(\bx_i)-\frac{1}{M}\sum_{j=1}^M f(\bx_j)) }}.$$ 
+In our experiments, $\{\bx_i\}$ are chosen to be $250$ random  points. And the algorithm ${\cal A}$ are the proposed method in the article, and for comparison, the spectral approximation used Chebyshev-Gauss-Lobatto (CGL) grids  with  the same number of projections in each dimension.
+Fig.~6.1 shows the simulation results of RRSE. The
+circle represents the error of the rank-1 lattice approximation
+in \eqref{fhat1} and the star is of spectral grids method. From Fig.~6.1, our method outperforms the spectral CGL approximation. The convergence rate of our method is about
+$\mathcal{O}(n^{-1}).$ Higher convergence rate can be achieved  if
+better generators and more regular test functions are used.
+ \clearpage
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Chapters End %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Chapters End %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Chapters End %%%%%%%%%%%%%
+
+
+ \section*{Acknowledgements} The authors wish to thank Professors
+Jie Shen and Tao Tang for their valuable discussions and thank the
+two anonymous referees for their constructive suggestions which
+lead to a greatly improved paper.
+
+
+\begin{thebibliography}{10}
+\bibitem{BernardiM1997} {\sc C. Bernardi and Y. Maday}, {\em
+Spectral Methods}, in Handbook of Numerical Analysis, VOL.~V,
+Techniques of Scientific Computing (Part~2), P.~G. Ciarlet and
+J.~L. Lions, eds., North-Holland, Amsterdam, 1997, pp.~209--485.
+
+\bibitem{BernardiM1989} {\sc C. Bernardi and Y. Maday}, {\em
+Properties of some weighted Sobolev spaces and application to
+spectral approximations}, SIAM J. Numer. Anal., 26 (1989),
+pp.~769--829.
+
+\bibitem{Boyd2000} {\sc J.~P. Boyd}, {\em Chebyshev and Fourier
+Spectral Methods}, Dover, New York, 2000.
+
+\bibitem{CanutoHQZ1988} {\sc C. Canuto, M.~Y. Hussaini, A.
+Quarteroni, and T.~A. Zang}, {\em Spectral Methods in Fliud
+Dynamics}, Spring-Verlag, New York, 1988.
+
+\bibitem{CanutoQ1981} {\sc C. Canuto and A. Quarteroni}, {\em
+Spectral and pseudo-spectral methods for parabolic problems with
+nonperiodic boundary conditions}, Calcolo, 18 (1981),
+pp.~197--218.
+
+\bibitem{Don1994} {\sc W.~S. Don and D. Gottlieb}, {\em The
+Chebyshev-Legendre method: Implementing Legendre methods on
+Chebyshev points}, SIAM J. Numer. Anal., 31 (1994),
+pp.~1519--1534.
+
+\bibitem{Fornberg1995} {\sc B. Fornberg}, {\em A Practical Guide
+to Pseudospectral Methods}, Cambridge Monographs on Applied and
+Computational Mathematics, Cambridge University Press, Cambridge,
+1995.
+
+\bibitem{Funaro1986} {\sc D. Funaro}, {\em A multidomain spectral
+approximation of elliptic equations}, Numer. Meth. PDEs, 2 (1986),
+pp.~187--205.
+
+\bibitem{Gottlieb1984} {\sc D. Gottlieb, M.~Y. Hussaini and S~.A.
+Orszag}, {\em Introduction: Theory and Application of Spetral
+Methods}, in Spectral Methods for Partial Differential Equations,
+R~.G. Voigt, D. Gottlieb and M.~Y. Hussaini, eds., SIAM,
+Philadelphia, 1984.
+
+\bibitem{GottliebO1977} {\sc D. Gottlieb and S.~A. Orszag}, {\em
+Numerical analysis of spectral methods: theory and applications},
+CBMS-NSF Regional Conference Series in Applied Mathematics, SIAM,
+Philadelphia, 1977.
+
+\bibitem{Hai-Z1979} {\sc D.~B. Haidvogel and T. Zang},
+{\em The accurate solution of Poisson equation by expansion in
+Chebyshev polynomials}, J. Comp. Phy, 30 (1979), 167--180.
+
+
+\bibitem{Hickernell1998}
+{\sc F.~J. Hickernell}, {\em Lattice rules: How well do they
+measure up?}, in Random and Quasi-Random Point Sets (P. Hellekalek
+and G. Larcher, eds.), Lecture Notes in Statistics, vol. 138,
+Springer-Verlag, New York, 1998, pp.~109--166.
+
+\bibitem{HickernellNie2003} {\sc F.~J. Hickernell and H.
+Niederreiter}, {\em The existence of good extensible rank-1
+lattices}, J. Complexity, 19 (2003), pp.~286--300.
+
+\bibitem{HuaWang1981} {\sc L.~K. Hua and Y. Wang}, {\em
+Applications of Number Theory to Numerical Analysis},
+Springer-Verlag and Science Press, Berlin and Beijing, 1981.
+
+\bibitem{KuoSloWoz05a} {\sc F.~Y. Kuo and I.~H. Sloan and H.
+Wo\'zniakowski}, {\em Lattice rules for multivariate approximation
+in the worst case setting},  in {M}onte {C}arlo and Quasi-{M}onte
+{C}arlo Methods 2004 (H. Niederreiter and D. Talay, eds.),
+Springer-Verlag, Berlin, 2005.
+
+\bibitem{LiHic03}
+{\sc D. Li and F.~J. Hickernell}, {\em Trigonometric spectral
+methods on lattices}, in Recent Advances in Scientific Computing
+and Partial Differential Equations (S. Y. Cheng, C.-W. Shu, and T.
+Tang, eds.), AMS Series in Contemporary Mathematics, vol. 330,
+American Mathematical Society, Providence, Rhode Island, 2003,
+pp.~121--132.
+
+\bibitem{MasonH2003} {\sc J.~C. Mason and D. Hanscomb}, {\em
+Chebyshev Polynomials}, CRC Press LLC, Florida, 2003.
+
+\bibitem{Mercier1989} {\sc B. Mercier}, {\em An Introduction to
+the Numerical Analysis of Spectral Methods}, Springer-Verlag, New
+York, 1989.
+
+\bibitem{MorMitYlv93} {\sc  M.~D. Morris,  T. ~J. Mitchell,
+and D. Ylvisaker }, {\em Bayesian design and analysis of computer
+experiments: Use of derivatives in surface prediction},
+Technometrics, 35 (1993), pp.~243--255.
+
+\bibitem{Niederreiter1992} {\sc H. Niederreiter}, {\em Random
+Number Generation and Quasi-Monte Carlo Methods}, CBMS-NSF
+Regional Conference Series in Applied Mathematics, SIAM,
+Philadelphia, 1992.
+
+\bibitem{ShenT07} {\sc J. Shen and T. Tang},
+Spectral and High-Order Methods with Applications, Science Press,
+2007.
+
+\bibitem{SloJoe92}
+{\sc I.~H. Sloan and S. Joe}, {\em Lattice Methods For Multiple
+Integration}, Academic Press, San Diego, 1992, pp.~146--147.
+
+\bibitem{Trefethen2000} {\sc L.~N. Trefethen}, {\em Spectral
+Methods in Matlab}, SIAM Philadelphia, 2000.
+
+\bibitem{Traub88} {\sc J.~F. Traub, G.~W. Wasilkowski and H. Wozniakowski}, {\em Information-based Complexity}, Academic Press, 1988.
+
+\bibitem{ZenEtal05a} {\sc X. Zeng, K.~T. Leung and F.~J. Hickernell},
+  {\em Error analysis of splines for periodic problems using
+  lattice designs}, in {M}onte {C}arlo and
+Quasi-{M}onte {C}arlo Methods 2004 (H. Niederreiter and D. Talay,
+eds.), Springer-Verlag, Berlin, 2005.
+
+\bibitem{Zengthesis} {\sc X. Zeng},
+  {\em Integration and Approximation Using Lattice Designs}, 2008.
+
+ \bibitem{HicHong2000}
+{\sc F. ~J. Hickernell, H. ~S. Hong, P. L'Ecuyer  and  C. Lemieux},
+{\em Extensible lattice sequences for quasi-{M}onte {C}arlo quadrature},
+SIAM J. Sci. Comput., 22(2000), pp.~1117-1138
+\end{thebibliography}
+
+\end{document}
